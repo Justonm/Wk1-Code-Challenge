@@ -1,4 +1,10 @@
-// Function to calculate net salary
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
 function calculateNetSalary(basicSalary, benefits) {
     const grossSalary = basicSalary + benefits;
 
@@ -51,17 +57,19 @@ function calculateNetSalary(basicSalary, benefits) {
     };
 }
 
-// Get user input using browser prompts
-const basicSalaryInput = prompt('Enter your basic salary:');
-const benefitsInput = prompt('Enter your benefits:');
+rl.question('Enter your basic salary: ', (basicSalaryInput) => {
+    rl.question('Enter your benefits: ', (benefitsInput) => {
+        const basicSalary = parseFloat(basicSalaryInput);
+        const benefits = parseFloat(benefitsInput);
 
-// Convert inputs to numbers
-const basicSalary = parseFloat(basicSalaryInput);
-const benefits = parseFloat(benefitsInput);
+        const salaryDetails = calculateNetSalary(basicSalary, benefits);
 
-// Calculate net salary
-const salaryDetails = calculateNetSalary(basicSalary, benefits);
+        console.log(`Gross Salary: ${salaryDetails.grossSalary}`);
+        console.log(`PAYE Tax: ${salaryDetails.payeTax}`);
+        console.log(`NHIF: ${salaryDetails.nhif}`);
+        console.log(`NSSF: ${salaryDetails.nssf}`);
+        console.log(`Net Salary: ${salaryDetails.netSalary}`);
 
-// Output results
-alert(`Gross Salary: ${salaryDetails.grossSalary}\nPAYE 
-    Tax: ${salaryDetails.payeTax}\nNHIF: ${salaryDetails.nhif}\nNSSF: ${salaryDetails.nssf}\nNet Salary: ${salaryDetails.netSalary}`);
+        rl.close();
+    });
+});
